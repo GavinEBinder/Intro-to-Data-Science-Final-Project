@@ -1,0 +1,226 @@
+---
+title: "Exploratory Data Analysis for Intro to Data Science"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+```
+
+```{r}
+games <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-30/video_games.csv")
+```
+```{r}
+games
+```
+
+```{r}
+games <- games %>%
+  mutate(meta_rating_class = case_when(metascore >= 90 ~ "Universal Acclaim",
+                                       metascore >= 75 ~ "Generally Favorable",
+                                       metascore >= 50 ~ "Mixed/Average",
+                                       metascore >= 20 ~ "Generally Unfavorable",
+                                       metascore < 20 ~ "Overwhelming Dislike"))
+games
+```
+```{r}
+
+```
+
+
+# Data Exploration
+
+A summary of our dataset:
+
+```{r}
+summary(games)
+```
+
+# Univariate Data Exploration
+
+First, before we get into answering our questions, we do a little bit of univariate exploratory data anylsis to visualize some of our data.
+
+## Metascore
+
+The [Metacritic](https://www.metacritic.com/) website is a popular website that takes many critic reviews for media including video games. Metacritic reviews is one way to tell if a game would be worth buying or "fun". Our data set includes a column for the Metacritic score's that are available on the website, and earlier we created a new column to include the classifications that Metacritic uses. The levels of rating can be from 1 to 100, and the classifications from overwhelming dislike to universal acclaim. Here, we create a bar blot to show number of games with certain scores, including filling games by their classification.
+
+```{r}
+games %>%
+  ggplot() +
+  geom_bar(aes(x = metascore,
+               fill = meta_rating_class))
+```
+
+As we can see from the bar blot, most of the games tend to be in mixed/average or generally favorable, with very few games being generally unfavorable or universal acclaim. 
+
+## Price
+
+An important part about a video game would be it's price. Likely, games that are larger and more expensive to make will be priced higher. Here, we visualize the data distribution on price. First, we have decided to omit games with a price greater than 400, because there is only one game with no average_playtime, median_playtime, or metascore. There will be two different histograms made, one including prices less than 400 to show a greater scale of prices and the other with games priced less than 100, to show where a larger portion of the games are priced, as most games are less than 100 dollars.
+
+```{r}
+games %>%
+  filter(price > 400)
+```
+
+### Games with prices less than 400:
+
+```{r}
+games %>%
+  filter(price < 400) %>%
+  ggplot() +
+  geom_histogram(
+    mapping = aes(
+      x = price),
+    binwidth =  5
+  ) +
+  labs(
+    title = "Games with price less than 400",
+    x = "Price of Games",
+    y = "Count"
+  )
+```
+
+### Games with prices less than 100:
+
+```{r}
+games %>%
+  filter(price < 100) %>%
+  ggplot() +
+  geom_histogram(
+    mapping = aes(
+      x = price),
+    binwidth = 5
+  ) +
+    labs(
+    title = "Games with price less than 100",
+    x = "Price of Games",
+    y = "Count"
+  )
+```
+
+## Developer
+
+Here, we look at the distribution of games by developer:
+
+```{r}
+games %>%
+  drop_na() %>%
+  group_by(developer) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:10) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = reorder(developer, count),
+      y = count,
+      fill = developer
+    )
+  ) +
+  labs(
+    title = "Distribution of Developers (Top 10)",
+    x = "Developer",
+    y = "Count"
+  ) +
+  coord_flip()
+```
+One quick observation we can make is that Ubisoft Montreal develops a lot of games.
+
+## Publishers
+
+We also look at the distribution for publishers.
+
+```{r}
+games %>%
+  drop_na() %>%
+  group_by(publisher) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:10) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = reorder(publisher, count),
+      y = count,
+      fill = publisher
+    )
+  ) +
+  labs(
+    title = "Distribution of Publisher's (Top 10)",
+    x = "Publisher",
+    y = "Count"
+  ) +
+  coord_flip()
+```
+
+As we can see, Ubisoft stays on top for both number of games developed and published.
+
+# Multivariate/Bivariate Data Exploration
+
+Here, we did some multivariate exploration to find the relationship between price and metascore. However, we had to use the slice function to reduce the amount of games being used to lessen clutter.
+
+```{r}
+games %>% 
+  drop_na() %>%
+  slice(1:300) %>%
+  ggplot() +
+  geom_point(
+    mapping = aes(
+      x = metascore, 
+      y = price, 
+      color = meta_rating_class),
+    na.rm = TRUE,
+    alpha = 0.8) +
+  labs(
+    title = "Price by Metascore", 
+    x = "Metascore",
+    y = "Price",
+    color = "Metascore Ranking") +
+    coord_flip()
+```
+
+Surprisingly, metascore seems to have almost no relationship with price, as even as you look into a price of 10, a large amount are in 3 different categories.
+
+# Data Analysis
+
+## How does price affect metacritic score?
+
+To answer this question, we used the same scatter plot that we analyzed during our multivariate exploratory data analysis. We were easily able to identify
+the distributions and differences between each observation to find if metacritic scores really had an affect on the
+price of the game.
+
+```{r}
+games %>% 
+  drop_na() %>%
+  slice(1:500) %>%
+  ggplot() +
+  geom_point(
+    mapping = aes(
+      x = metascore, 
+      y = price, 
+      color = meta_rating_class),
+    na.rm = TRUE,
+    alpha = 0.8) +
+  labs(
+    title = "Price by Metascore", 
+    x = "Metascore",
+    y = "Price",
+    color = "Metascore Ranking") +
+    coord_flip()
+```
+
+From this sample size of 500, we can see that generally price doesn't affect metascore all that much. Just using a price point at 20, we know that there are many games with different metascores and rankings. However, it does seem as though no unfavorable games go past the price point of 20, meaning there is only a small correlation. 
+
+# Conclusion
+
+
+
+
+
+
+
+
+
+
+

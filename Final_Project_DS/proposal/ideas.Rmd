@@ -1,0 +1,22 @@
+---
+title: "Project Proposal"
+output: html_notebook
+---
+
+(notice that you can reuse some of the sections below for the final project report)
+
+## Section 1. Introduction
+
+To explore video games and their popularity.
+
+## Section 2. Data Analysis Plan
+
+- Does prrice make for a higher or lower metacritic score?
+
+- What are the correlations between when a game waS released and what they are priced?
+
+- Does metacritic score have any effect on average playtime?
+
+## Section 3. Data
+
+Our dataset comes from TidyTuesday 2019-07-30 which includes around 9000 videogames, including their release date, price, owners, developer, publisher, average playtime, median playtime, and metacritic score. The dataset is in tidy format.

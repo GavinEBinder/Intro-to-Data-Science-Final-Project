@@ -1,0 +1,313 @@
+---
+title: "Final Report for Intro to Data Science"
+output: html_notebook
+---
+
+# Introduction
+
+The video games industry has become so large that its revenues pull in more than movies and music combined, making it an essential part to our society. Using the `video_games.csv` data set from TidyTuesday, we are going explore some characteristics of video games including:
+
+- How does price affect metacritic score?
+
+- What are the correlations between the year a game was released and the price of the game?
+
+# Prerequisites 
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+```
+
+# Dataset
+
+Importing the dataset and setting it to `games`:
+
+```{r}
+games <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-30/video_games.csv")
+```
+Games dataset:
+
+```{r}
+games
+```
+Print a glimpse of the dataset:
+
+```{r}
+glimpse(games)
+```
+
+## Metacritic Rating Classification
+
+Here, we add a new column `meta_rating_class` to give the meta rating alongside the metascore for the games with an available metascore. 
+The classification systems goes by the following:
+
+Universal Acclaim: 90 - 100
+
+Generally Favorable: 75 - 89
+
+Mixed/Average: 50 - 74
+
+Generally Unfavorable: 20 - 49
+
+Overwhelming dislike: 0 - 19
+
+
+```{r}
+games <- games %>%
+  mutate(meta_rating_class = case_when(metascore >= 90 ~ "Universal Acclaim",
+                                       metascore >= 75 ~ "Generally Favorable",
+                                       metascore >= 50 ~ "Mixed/Average",
+                                       metascore >= 20 ~ "Generally Unfavorable",
+                                       metascore < 20 ~ "Overwhelming Dislike"))
+games
+```
+## Splitting Date Column
+
+To make answering our second question easier, we have mutated the release_date column to be in date format and split the release_date column into three seperate columns of `day`, `month`, and `year`.
+
+Changing to date format:
+
+```{r}
+games <- games %>%
+  mutate(release_date = mdy(release_date))
+```
+Splitting the column:
+
+```{r}
+games <- games %>%
+  mutate(year = year(release_date),
+         month = month(release_date),
+         day = day(release_date))
+games
+```
+
+# Data Exploration
+
+A summary of our dataset:
+
+```{r}
+summary(games)
+```
+
+# Univariate Data Exploration
+
+First, before we get into answering our questions, we do a little bit of univariate exploratory data analysis to visualize some of our data.
+
+## Metascore
+
+The [Metacritic](https://www.metacritic.com/) website is a popular website that takes many critic reviews for media including video games. Metacritic reviews is one way to tell if a game would be worth buying or "fun". Our data set includes a column for the Metacritic score's that are available on the website, and earlier we created a new column to include the classifications that Metacritic uses. The levels of rating can be from 1 to 100, and the classifications from overwhelming dislike to universal acclaim. Here, we create a bar blot to show number of games with certain scores, including filling games by their classification.
+
+```{r}
+games %>%
+  ggplot() +
+  geom_bar(aes(x = metascore,
+               fill = meta_rating_class))
+```
+
+As we can see from the bar blot, most of the games tend to be in mixed/average or generally favorable, with very few games being generally unfavorable or universal acclaim. 
+
+## Price
+
+An important part about a video game would be it's price. Likely, games that are larger and more expensive to make will be priced higher. Here, we visualize the data distribution on price. First, we have decided to omit games with a price greater than 400, because there is only one game with no average_playtime, median_playtime, or metascore. There will be two different histograms made, one including prices less than 400 to show a greater scale of prices and the other with games priced less than 100, to show where a larger portion of the games are priced, as most games are less than 100 dollars.
+
+```{r}
+games %>%
+  filter(price > 400)
+```
+
+### Games with prices less than 400:
+
+```{r}
+games %>%
+  filter(price < 400) %>%
+  ggplot() +
+  geom_histogram(
+    mapping = aes(
+      x = price),
+    binwidth =  5
+  ) +
+  labs(
+    title = "Games with price less than 400",
+    x = "Price of Games",
+    y = "Count"
+  )
+```
+
+### Games with prices less than 100:
+
+```{r}
+games %>%
+  filter(price < 100) %>%
+  ggplot() +
+  geom_histogram(
+    mapping = aes(
+      x = price),
+    binwidth = 5
+  ) +
+    labs(
+    title = "Games with price less than 100",
+    x = "Price of Games",
+    y = "Count"
+  )
+```
+
+## Developer
+
+Here, we look at the distribution of games by developer:
+
+```{r}
+games %>%
+  drop_na() %>%
+  group_by(developer) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:10) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = reorder(developer, count),
+      y = count,
+      fill = developer
+    )
+  ) +
+  labs(
+    title = "Distribution of Developers (Top 10)",
+    x = "Developer",
+    y = "Count"
+  ) +
+  coord_flip()
+```
+
+One quick observation we can make is that Ubisoft Montreal develops a lot of games.
+
+## Publishers
+
+We also look at the distribution for publishers.
+
+```{r}
+games %>%
+  drop_na() %>%
+  group_by(publisher) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:10) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = reorder(publisher, count),
+      y = count,
+      fill = publisher
+    )
+  ) +
+  labs(
+    title = "Distribution of Publisher's (Top 10)",
+    x = "Publisher",
+    y = "Count"
+  ) +
+  coord_flip()
+```
+
+As we can see, Ubisoft stays on top for both number of games developed and published.
+
+# Multivariate/Bivariate Data Exploration
+
+Here, we did some multivariate exploration to visualize the correlation between price and metascore. However, we had to use the slice function to reduce the amount of games being used to lessen clutter.
+
+```{r}
+games %>% 
+  drop_na() %>%
+  slice(1:300) %>%
+  ggplot() +
+  geom_point(
+    mapping = aes(
+      x = metascore, 
+      y = price, 
+      color = meta_rating_class),
+    na.rm = TRUE,
+    alpha = 0.8) +
+  labs(
+    title = "Price by Metascore", 
+    x = "Metascore",
+    y = "Price",
+    color = "Metascore Ranking") +
+    coord_flip()
+```
+
+
+# Data Analysis
+
+# Question 1
+
+## How does price affect metacritic score?
+
+To answer this question, we used the same scatter plot that we analyzed during our multivariate exploratory data analysis. We were easily able to identify
+the distributions and differences between each observation to find if metacritic scores really had an affect on the
+price of the game.
+
+```{r}
+games %>% 
+  drop_na() %>%
+  slice(1:500) %>%
+  ggplot() +
+  geom_point(
+    mapping = aes(
+      x = metascore, 
+      y = price, 
+      color = meta_rating_class),
+    na.rm = TRUE,
+    alpha = 0.8) +
+  labs(
+    title = "Price by Metascore", 
+    x = "Metascore",
+    y = "Price",
+    color = "Metascore Ranking") +
+    coord_flip()
+```
+
+From this sample size of 500, we can see that generally price doesn't affect metascore all that much. Just using a price point at 20, we know that there are many games with different meta scores and rankings. However, it does seem as though no unfavorable games go past the price point of 20, meaning there is only a small correlation. 
+
+# Question 2
+
+What are the correlations between the year a game was released and the price of the game?
+
+```{r}
+games %>%
+  drop_na() %>%
+  ggplot() +
+  geom_point(
+    aes(x = year,
+                  y = price),
+    alpha = 0.6
+  ) +
+  labs(
+    title = "Price by Year for Games",
+    x = "Year (2004 - 2018)",
+    y = "Price"
+  )
+```
+
+As we can see, there is a clear correlation between the year a a game was released and its price. Prices for games have gotten significantly higher due to increased costs in game development over the years.
+
+# Conclusion
+In our research, we have discovered the answer to the questions that we asked in the beginning. We learned that price had little to no correlation on metascore, but as the years progressed the prices for games have greatly risen with no signs of stopping. 
+
+We also learned how to improve our research to possibly use for next time we have to do a similar project. In order to make our dataset more neat and visually appealing, we could improve the way that we use graphs by adding better aesthetics. In order to ask more complicated questions, we could have included more complex graphs that could incorporate more than two columns. This, in the long run, would help deepen our understanding of not only this dataset, but any dataset in the future as we apply this insight into our future studies. 
+
+If given the chance to work more with this dataset we could apply the tips listed above in order to fully understand the correlation between the various columns that we are presented with. We could, through some tedious work, also incorporate the user score of the individual games as listed in the [User Score](https://www.metacritic.com/browse/games/score/userscore/all/all/filtered?sort=desc) section of the list from which the metacritic rating is sourced. From there we could see if there is any correlation between what the critics think of a game, and what reviews were left by the general public. We could also see how a specific series’ titles were received, as popularity between different entries of a series can vary greatly. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

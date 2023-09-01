@@ -1,0 +1,570 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.2     v dplyr   1.0.7
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019{-}07{-}30/video\_games.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   number = col_double(),
+##   game = col_character(),
+##   release_date = col_character(),
+##   price = col_double(),
+##   owners = col_character(),
+##   developer = col_character(),
+##   publisher = col_character(),
+##   average_playtime = col_double(),
+##   median_playtime = col_double(),
+##   metascore = col_double()
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 26,688 x 10
+##    number game    release_date price owners developer publisher average_playtime
+##     <dbl> <chr>   <chr>        <dbl> <chr>  <chr>     <chr>                <dbl>
+##  1      1 Half-L~ Nov 16, 2004  9.99 10,00~ Valve     Valve                  110
+##  2      3 Counte~ Nov 1, 2004   9.99 10,00~ Valve     Valve                  236
+##  3     21 Counte~ Mar 1, 2004   9.99 10,00~ Valve     Valve                   10
+##  4     47 Half-L~ Nov 1, 2004   4.99 5,000~ Valve     Valve                    0
+##  5     36 Half-L~ Jun 1, 2004   9.99 2,000~ Valve     Valve                    0
+##  6     52 CS2D    Dec 24, 2004 NA    1,000~ Unreal S~ Unreal S~               16
+##  7      2 Unreal~ Mar 16, 2004 15.0  500,0~ Epic Gam~ Epic Gam~                0
+##  8      4 DOOM 3  Aug 3, 2004   4.99 500,0~ id Softw~ id Softw~                0
+##  9     14 Beyond~ Apr 27, 2004  5.99 500,0~ Larian S~ Larian S~                0
+## 10     40 Hitman~ Apr 20, 2004  8.99 500,0~ Io-Inter~ Io-Inter~                0
+## # ... with 26,678 more rows, and 2 more variables: median_playtime <dbl>,
+## #   metascore <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\OtherTok{\textless{}{-}}\NormalTok{ games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{meta\_rating\_class =} \FunctionTok{case\_when}\NormalTok{(metascore }\SpecialCharTok{\textgreater{}=} \DecValTok{90} \SpecialCharTok{\textasciitilde{}} \StringTok{"Universal Acclaim"}\NormalTok{,}
+\NormalTok{                                       metascore }\SpecialCharTok{\textgreater{}=} \DecValTok{75} \SpecialCharTok{\textasciitilde{}} \StringTok{"Generally Favorable"}\NormalTok{,}
+\NormalTok{                                       metascore }\SpecialCharTok{\textgreater{}=} \DecValTok{50} \SpecialCharTok{\textasciitilde{}} \StringTok{"Mixed/Average"}\NormalTok{,}
+\NormalTok{                                       metascore }\SpecialCharTok{\textgreater{}=} \DecValTok{20} \SpecialCharTok{\textasciitilde{}} \StringTok{"Generally Unfavorable"}\NormalTok{,}
+\NormalTok{                                       metascore }\SpecialCharTok{\textless{}} \DecValTok{20} \SpecialCharTok{\textasciitilde{}} \StringTok{"Overwhelming Dislike"}\NormalTok{))}
+\NormalTok{games}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 26,688 x 11
+##    number game    release_date price owners developer publisher average_playtime
+##     <dbl> <chr>   <chr>        <dbl> <chr>  <chr>     <chr>                <dbl>
+##  1      1 Half-L~ Nov 16, 2004  9.99 10,00~ Valve     Valve                  110
+##  2      3 Counte~ Nov 1, 2004   9.99 10,00~ Valve     Valve                  236
+##  3     21 Counte~ Mar 1, 2004   9.99 10,00~ Valve     Valve                   10
+##  4     47 Half-L~ Nov 1, 2004   4.99 5,000~ Valve     Valve                    0
+##  5     36 Half-L~ Jun 1, 2004   9.99 2,000~ Valve     Valve                    0
+##  6     52 CS2D    Dec 24, 2004 NA    1,000~ Unreal S~ Unreal S~               16
+##  7      2 Unreal~ Mar 16, 2004 15.0  500,0~ Epic Gam~ Epic Gam~                0
+##  8      4 DOOM 3  Aug 3, 2004   4.99 500,0~ id Softw~ id Softw~                0
+##  9     14 Beyond~ Apr 27, 2004  5.99 500,0~ Larian S~ Larian S~                0
+## 10     40 Hitman~ Apr 20, 2004  8.99 500,0~ Io-Inter~ Io-Inter~                0
+## # ... with 26,678 more rows, and 3 more variables: median_playtime <dbl>,
+## #   metascore <dbl>, meta_rating_class <chr>
+\end{verbatim}
+
+\hypertarget{data-exploration}{%
+\section{Data Exploration}\label{data-exploration}}
+
+A summary of our dataset:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(games)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      number         game           release_date           price        
+##  Min.   :   1   Length:26688       Length:26688       Min.   :  0.490  
+##  1st Qu.: 821   Class :character   Class :character   1st Qu.:  2.990  
+##  Median :2356   Mode  :character   Mode  :character   Median :  5.990  
+##  Mean   :2904                                         Mean   :  8.947  
+##  3rd Qu.:4523                                         3rd Qu.:  9.990  
+##  Max.   :8846                                         Max.   :595.990  
+##                                                       NA's   :3095     
+##     owners           developer          publisher         average_playtime  
+##  Length:26688       Length:26688       Length:26688       Min.   :   0.000  
+##  Class :character   Class :character   Class :character   1st Qu.:   0.000  
+##  Mode  :character   Mode  :character   Mode  :character   Median :   0.000  
+##                                                           Mean   :   9.057  
+##                                                           3rd Qu.:   0.000  
+##                                                           Max.   :5670.000  
+##                                                           NA's   :9         
+##  median_playtime     metascore     meta_rating_class 
+##  Min.   :   0.00   Min.   :20.00   Length:26688      
+##  1st Qu.:   0.00   1st Qu.:66.00   Class :character  
+##  Median :   0.00   Median :73.00   Mode  :character  
+##  Mean   :   5.16   Mean   :71.89                     
+##  3rd Qu.:   0.00   3rd Qu.:80.00                     
+##  Max.   :3293.00   Max.   :98.00                     
+##  NA's   :12        NA's   :23838
+\end{verbatim}
+
+\hypertarget{univariate-eda}{%
+\section{Univariate EDA}\label{univariate-eda}}
+
+First, before we get into answering our questions, we do a little bit of
+univariate exploratory data anylsis to visualize some of our data.
+
+\hypertarget{metascore}{%
+\subsection{Metascore}\label{metascore}}
+
+CHECK TO SEE IF THIS IS GOOD
+
+NEW:
+
+The \href{https://www.metacritic.com/}{Metacritic} website is a popular
+website that takes many critic reviews for media including video games.
+Metacritic reviews is one way to tell if a game would be worth buying or
+``fun''. Our data set includes a column for the Metacritic score's that
+are available on the website, and earlier we created a new column to
+include the classifications that Metacritic uses. The levels of rating
+can be from 1 to 100, and the classifications from overwhelming dislike
+to universal acclaim. Here, we create a bar blot to show number of games
+with certain scores, including filling games by their classification.
+
+ORIGINAL:
+
+One of the most Important parts of a game is how fun it is and whether
+or not it is considered a ``good game.'' One of the most popular ways to
+do this is to look at the Meta Score for the game, made by the popular
+rating website \href{https://www.metacritic.com/}{Metacritic} This
+website has ratings for several categories of media, but we are going to
+be using the ``Game'' category. Inside this category, there are
+different levels of rating from 1-100, with the colors indicating
+
+\begin{itemize}
+\tightlist
+\item
+  100-90 = \emph{Universally Acclaimed}
+\item
+  89-75 = \emph{Generally Favorable}
+\item
+  74-50 = \emph{Mixed/Average}
+\item
+  49-1 = \emph{Generally Unfavorable}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ metascore,}
+               \AttributeTok{fill =}\NormalTok{ meta\_rating\_class))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 23838 rows containing non-finite values (stat_count).
+\end{verbatim}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+As we can see from the bar blot, most of the games tend to be in
+mixed/average or generally favorable, with very few games being
+generally unfavorable or universal acclaim.
+
+\hypertarget{price}{%
+\subsection{Price}\label{price}}
+
+An important part about a video game would be it's price. Likely, games
+that are larger and more expensive to make will be priced higher. Here,
+we visualize the data distribution on price. First, we have decided to
+omit games with a price greater than 400, because there is only one game
+with no average\_playtime, median\_playtime, or metascore. There will be
+two different histograms made, one including prices less than 400 to
+show a greater scale of prices and the other with games priced less than
+100, to show where a larger portion of the games are priced, as most
+games are less than 100 dollars.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(price }\SpecialCharTok{\textgreater{}} \DecValTok{400}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 11
+##   number game   release_date price owners  developer  publisher average_playtime
+##    <dbl> <chr>  <chr>        <dbl> <chr>   <chr>      <chr>                <dbl>
+## 1   2958 ADR-L~ Apr 12, 2018  596. 0 .. 2~ Suomen Ku~ Suomen K~                0
+## # ... with 3 more variables: median_playtime <dbl>, metascore <dbl>,
+## #   meta_rating_class <chr>
+\end{verbatim}
+
+Games with prices less than 400:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(price }\SpecialCharTok{\textless{}} \DecValTok{400}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ price),}
+    \AttributeTok{binwidth =}  \DecValTok{5}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Games with price less than 400"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Price of Games"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Count"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+Games with prices less than 100:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(price }\SpecialCharTok{\textless{}} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ price),}
+    \AttributeTok{binwidth =} \DecValTok{5}
+\NormalTok{  ) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Games with price less than 100"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Price of Games"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Count"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\hypertarget{developer}{%
+\subsection{Developer}\label{developer}}
+
+Here, we look at the distribution of games by developer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(developer) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(developer, count),}
+      \AttributeTok{y =}\NormalTok{ count,}
+      \AttributeTok{fill =}\NormalTok{ developer}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Distribution of Developers (Top 10)"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Developer"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Count"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-10-1.pdf} One
+quick observation we can make is that Ubisoft Montreal develops a lot of
+games.
+
+\hypertarget{publishers}{%
+\subsection{Publishers}\label{publishers}}
+
+We also look at the distribution for publishers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(publisher) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(publisher, count),}
+      \AttributeTok{y =}\NormalTok{ count,}
+      \AttributeTok{fill =}\NormalTok{ publisher}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Distribution of Publisher\textquotesingle{}s (Top 10)"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Publisher"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Count"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+As we can see, Ubisoft stays on top for both number of games developed
+and published.
+
+\hypertarget{average-playtime}{%
+\subsection{Average Playtime}\label{average-playtime}}
+
+ASK ABOUT AVERAGE PLAYTIME/MEDIAN PLAYTIME
+
+Here, we create a distribution by average playtime.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(average\_playtime }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, average\_playtime }\SpecialCharTok{\textless{}=} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ average\_playtime))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(average\_playtime) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(average\_playtime }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ average\_playtime,}
+      \AttributeTok{y =}\NormalTok{ count}
+\NormalTok{    )}
+\NormalTok{  ) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\hypertarget{multivariatebivariate-exploratory-data-analysis}{%
+\section{Multivariate/Bivariate Exploratory Data
+Analysis}\label{multivariatebivariate-exploratory-data-analysis}}
+
+Here, we did some multivariate exploration to find the relationship
+between price and metascore. However, we had to use the slice function
+to reduce the amount of games being used to lessen clutter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{300}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ metascore, }
+      \AttributeTok{y =}\NormalTok{ price, }
+      \AttributeTok{color =}\NormalTok{ meta\_rating\_class),}
+    \AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{,}
+    \AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Price by Metascore"}\NormalTok{, }
+    \AttributeTok{x =} \StringTok{"Metascore"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Price"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"Metascore Ranking"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-14-1.pdf}
+Surprisingly, metascore seems to have almost no relationship with price,
+as even as you look into a price of 10, a large amount are in 3
+different categories.
+
+\hypertarget{data-analysis}{%
+\section{Data Analysis}\label{data-analysis}}
+
+\hypertarget{how-does-price-affect-metacritic-score}{%
+\subsection{How does price affect metacritic
+score?}\label{how-does-price-affect-metacritic-score}}
+
+To answer this question, we analyzed our data using a scatter plot
+visualization. We were easily able to identify the distributions and
+differences between each observation to find if metacritic scores really
+had an affect on the price of the game.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{games }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{300}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}
+    \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ metascore, }
+      \AttributeTok{y =}\NormalTok{ price, }
+      \AttributeTok{color =}\NormalTok{ meta\_rating\_class),}
+    \AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{,}
+    \AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Price by Metascore"}\NormalTok{, }
+    \AttributeTok{x =} \StringTok{"Metascore"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Price"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"Metascore Ranking"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+What we see from this sample size of 500 observations, we can conclude
+that the games with lower metacritic scores have lower prices.
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\end{document}
